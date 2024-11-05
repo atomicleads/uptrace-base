@@ -14,22 +14,6 @@ services:
     volumes:
       - ch_data2:/var/lib/clickhouse
 
-  postgres:
-    image: postgres:15-alpine
-    restart: on-failure
-    environment:
-      PGDATA: /var/lib/postgresql/data/pgdata
-      POSTGRES_USER: uptrace
-      POSTGRES_PASSWORD: uptrace
-      POSTGRES_DB: uptrace
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U uptrace -d uptrace"]
-      interval: 1s
-      timeout: 1s
-      retries: 30
-    volumes:
-      - "pg_data3:/var/lib/postgresql/data/pgdata"
-
   uptrace:
     image: "uptrace/uptrace:1.7.6"
     #image: 'uptrace/uptrace-dev:latest'
