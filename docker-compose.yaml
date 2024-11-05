@@ -24,7 +24,6 @@ services:
     #  - DEBUG=2
     depends_on:
       - clickhouse
-      - postgres
 
   otelcol:
     image: otel/opentelemetry-collector-contrib:0.88.0
