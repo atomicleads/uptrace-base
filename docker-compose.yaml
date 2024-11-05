@@ -13,9 +13,6 @@ services:
       retries: 30
     volumes:
       - ch_data2:/var/lib/clickhouse
-    ports:
-      - "8123:8123"
-      - "9000:9000"
 
   postgres:
     image: postgres:15-alpine
@@ -32,8 +29,6 @@ services:
       retries: 30
     volumes:
       - "pg_data3:/var/lib/postgresql/data/pgdata"
-    ports:
-      - "5432:5432"
 
   uptrace:
     image: "uptrace/uptrace:1.7.6"
@@ -43,9 +38,6 @@ services:
       - ./uptrace.yml:/etc/uptrace/uptrace.yml
     #environment:
     #  - DEBUG=2
-    ports:
-      - "14317:14317"
-      - "14318:14318"
     depends_on:
       - clickhouse
       - postgres
@@ -55,9 +47,6 @@ services:
     restart: on-failure
     volumes:
       - ./otel-collector.yaml:/etc/otelcol-contrib/config.yaml
-    ports:
-      - "4317:4317"
-      - "4318:4318"
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
@@ -66,9 +55,6 @@ services:
   mailpit:
     image: axllent/mailpit
     restart: always
-    ports:
-      - 1025:1025
-      - 8025:8025
     environment:
       MP_MAX_MESSAGES: 5000
       MP_DATA_FILE: /data/mailpit.db
@@ -88,8 +74,6 @@ services:
     volumes:
       - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
       - ./grafana/custom.ini:/etc/grafana/grafana.ini
-    ports:
-      - "3000:3000"
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
