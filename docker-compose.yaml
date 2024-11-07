@@ -15,7 +15,7 @@ services:
       - ch_data2:/var/lib/clickhouse
 
   uptrace:
-    image: "uptrace/uptrace:1.7.6"
+    image: "uptrace/uptrace:1.7.7"
     #image: 'uptrace/uptrace-dev:latest'
     restart: on-failure
     volumes:
@@ -26,7 +26,7 @@ services:
       - clickhouse
 
   otelcol:
-    image: otel/opentelemetry-collector-contrib:0.88.0
+    image: otel/opentelemetry-collector-contrib:0.113.0
     restart: on-failure
     volumes:
       - ./otel-collector.yaml:/etc/otelcol-contrib/config.yaml
@@ -47,9 +47,10 @@ services:
       - mailpit_data:/data
 
   vector:
-    image: timberio/vector:0.28.X-alpine
+    image: timberio/vector:0.42.0-alpine
     volumes:
       - ./vector.toml:/etc/vector/vector.toml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
 
   grafana:
     image: grafana/grafana:9.5.3
